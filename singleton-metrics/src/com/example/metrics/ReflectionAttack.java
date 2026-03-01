@@ -14,10 +14,13 @@ public class ReflectionAttack {
         Constructor<MetricsRegistry> ctor = MetricsRegistry.class.getDeclaredConstructor();
         ctor.setAccessible(true);
 
-        MetricsRegistry evil = ctor.newInstance();
-
-        System.out.println("Singleton identity: " + System.identityHashCode(singleton));
-        System.out.println("Evil identity     : " + System.identityHashCode(evil));
-        System.out.println("Same object?      : " + (singleton == evil));
+        try {
+            MetricsRegistry evil = ctor.newInstance();
+            System.out.println("FAIL: second instance created!");
+            System.out.println("Singleton identity: " + System.identityHashCode(singleton));
+            System.out.println("Evil identity     : " + System.identityHashCode(evil));
+        } catch (Exception e) {
+            System.out.println("PASS: reflection blocked — " + e.getCause().getMessage());
+        }
     }
 }
