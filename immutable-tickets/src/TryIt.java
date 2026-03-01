@@ -1,7 +1,7 @@
+import java.util.List;
+
 import com.example.tickets.IncidentTicket;
 import com.example.tickets.TicketService;
-
-import java.util.List;
 
 /**
  * Starter demo that shows why mutability is risky.
@@ -20,9 +20,11 @@ public class TryIt {
         System.out.println("Created: " + t);
 
         // Demonstrate post-creation mutation through service
-        service.assign(t, "agent@example.com");
-        service.escalateToCritical(t);
+        IncidentTicket assigned = service.assign(t, "agent@example.com");
+        IncidentTicket escalated = service.escalateToCritical(t);
         System.out.println("\nAfter service mutations: " + t);
+        System.out.println("Assigned ticket: " + assigned);
+        System.out.println("Escalated ticket: " + escalated);
 
         // Demonstrate external mutation via leaked list reference
         List<String> tags = t.getTags();

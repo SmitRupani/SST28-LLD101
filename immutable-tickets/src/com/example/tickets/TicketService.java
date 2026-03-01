@@ -3,6 +3,8 @@ package com.example.tickets;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.example.tickets.IncidentTicket.Builder;
+
 /**
  * Service layer that creates tickets.
  *
@@ -55,14 +57,16 @@ public class TicketService {
 
          List<String> newTags = new ArrayList<>(t.getTags());
         newTags.add("ESCALATED");
-        return new IncidentTicket.Builder().from(t).priority("CRITICAL").tags(newTags).build();
+        // new IncidentTicket.Builder();
+        return Builder.from(t).priority("CRITICAL").tags(newTags).build();
     }
 
     public IncidentTicket assign(IncidentTicket t, String assigneeEmail) {
+        // new IncidentTicket.Builder();
         // scattered validation
         // if (assigneeEmail != null && !assigneeEmail.contains("@")) {
         //     throw new IllegalArgumentException("assigneeEmail invalid");
         // }
-        return new IncidentTicket.Builder().from(t).assigneeEmail(assigneeEmail).build();
+        return Builder.from(t).assigneeEmail(assigneeEmail).build();
     }
 }

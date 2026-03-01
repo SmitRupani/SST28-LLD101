@@ -95,7 +95,7 @@ public final class IncidentTicket {
                 + '}';
     }
 
-    static class Builder {
+    public static class Builder {
 
         private String id;
         private String reporterEmail;
@@ -158,7 +158,7 @@ public final class IncidentTicket {
             return this;
         }
 
-        public Builder from(IncidentTicket ticket) {
+        public static Builder from(IncidentTicket ticket) {
             return new Builder()
                     .id(ticket.id)
                     .reporterEmail(ticket.reporterEmail)
