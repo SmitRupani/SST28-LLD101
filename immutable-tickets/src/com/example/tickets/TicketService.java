@@ -24,10 +24,6 @@ public class TicketService {
         // if (reporterEmail == null || !reporterEmail.contains("@")) throw new IllegalArgumentException("email invalid");
         // if (title == null || title.trim().isEmpty()) throw new IllegalArgumentException("title required");
 
-        List<String> tags = new ArrayList<>();
-        tags.add("NEW");
-
-        // IncidentTicket t = new IncidentTicket(id, reporterEmail, title);
         IncidentTicket t = new IncidentTicket.Builder()
                 .id(id)
                 .reporterEmail(reporterEmail)
@@ -35,8 +31,15 @@ public class TicketService {
                 .priority("MEDIUM")
                 .source("CLI")
                 .customerVisible(false)
-                .tags(tags)
                 .build();
+
+        
+        List<String> tags = new ArrayList<>();
+        tags.add("NEW");
+
+        IncidentTicket newt = Builder.from(t).tags(tags).build();
+
+        // IncidentTicket t = new IncidentTicket(id, reporterEmail, title);
 
         // BAD: mutating after creation
         // t.setPriority("MEDIUM");
@@ -47,7 +50,7 @@ public class TicketService {
 
         // t.setTags(tags);
 
-        return t;
+        return newt;
     }
 
     public IncidentTicket escalateToCritical(IncidentTicket t) {
