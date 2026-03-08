@@ -1,16 +1,17 @@
+package com.example.payments;
 
-import com.example.payments.PaymentGateway;
+import java.util.Objects;
 
-public class FastPayAdapter implements PaymentGateway{
-    
-    PaymentGateway client;
+public class FastPayAdapter implements PaymentGateway {
+    private final FastPayClient client;
 
-    public FastPayAdapter(PaymentGateway client){
-        this.client=client;
+    public FastPayAdapter(FastPayClient client) {
+        this.client = Objects.requireNonNull(client, "client");
     }
 
     @Override
-    public String charge(String customerId, int amountCents){
-        return this.client.charge(customerId, amountCents);
+    public String charge(String customerId, int amountCents) {
+        // Adapts PaymentGateway.charge() → FastPayClient.payNow()
+        return client.payNow(customerId, amountCents);
     }
 }
