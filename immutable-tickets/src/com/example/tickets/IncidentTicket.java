@@ -173,6 +173,8 @@ public final class IncidentTicket {
         }
 
         public IncidentTicket build() {
+            // You can call one main function for validation here intead of calling multiple validation functions
+            // This helps maintain open closed principle as well as single responsibility principle
             Validation.requireTicketId(id);
             Validation.requireEmail(reporterEmail, "reporterEmail");
             Validation.requireTitle(title);
