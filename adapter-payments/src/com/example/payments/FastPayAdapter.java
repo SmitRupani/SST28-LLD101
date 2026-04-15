@@ -6,7 +6,7 @@ public class FastPayAdapter implements PaymentGateway {
     private final FastPayClient client;
 
     public FastPayAdapter(FastPayClient client) {
-        this.client = Objects.requireNonNull(client, "client");
+        this.client = Objects.requireNonNull(client, "client must not be null");
     }
 
     @Override
