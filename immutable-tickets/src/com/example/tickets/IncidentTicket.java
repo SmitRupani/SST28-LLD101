@@ -60,6 +60,7 @@ public final class IncidentTicket {
     }
 
     public List<String> getTags() {
+        // return List.copyOf(tags);
         return new ArrayList<>(tags);
     } // FIXED: return an unmodifiable copy
 
@@ -95,6 +96,20 @@ public final class IncidentTicket {
                 + '}';
     }
 
+    // Alternative to from() method in Builder, but less common
+    // public Builder toBuilder() {
+    //     return new Builder()
+    //             .id(this.id)
+    //             .reporterEmail(this.reporterEmail)
+    //             .title(this.title)
+    //             .description(this.description)
+    //             .priority(this.priority)
+    //             .tags(this.tags)
+    //             .assigneeEmail(this.assigneeEmail)
+    //             .customerVisible(this.customerVisible)
+    //             .slaMinutes(this.slaMinutes)
+    //             .source(this.source);
+    // }
     public static class Builder {
 
         private String id;
@@ -172,20 +187,21 @@ public final class IncidentTicket {
                     .source(ticket.source);
         }
 
+        // public IncidentTicket build() {
+        //     // You can call one main function for validation here intead of calling multiple validation functions
+        //     // This helps maintain open closed principle as well as single responsibility principle
+        //     Validation.requireTicketId(id);
+        //     Validation.requireEmail(reporterEmail, "reporterEmail");
+        //     Validation.requireTitle(title);
+        //     // Optional fields
+        //     if (assigneeEmail != null)
+        //         Validation.requireEmail(assigneeEmail, "assigneeEmail");
+        //     Validation.requireOneOf(priority, "priority", "LOW", "MEDIUM", "HIGH", "CRITICAL");
+        //     Validation.requireRange(slaMinutes, 5, 7200, "slaMinutes");
+        //     return new IncidentTicket(this);
+        // }
         public IncidentTicket build() {
-            // You can call one main function for validation here intead of calling multiple validation functions
-            // This helps maintain open closed principle as well as single responsibility principle
-            Validation.requireTicketId(id);
-            Validation.requireEmail(reporterEmail, "reporterEmail");
-            Validation.requireTitle(title);
-
-            // Optional fields
-            if (assigneeEmail != null)
-                Validation.requireEmail(assigneeEmail, "assigneeEmail");
-
-            Validation.requireOneOf(priority, "priority", "LOW", "MEDIUM", "HIGH", "CRITICAL");
-            Validation.requireRange(slaMinutes, 5, 7200, "slaMinutes");
-
+            Validation.validateIncidentTicket(id, reporterEmail, title, assigneeEmail, priority, slaMinutes);
             return new IncidentTicket(this);
         }
     }
